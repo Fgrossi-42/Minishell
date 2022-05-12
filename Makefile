@@ -8,7 +8,7 @@ END			= \e[0m
 
 NAME		= minishell
 
-FILES = main
+FILES = main utils
 
 PROJECT_H	= Incl/minishell.h
 OBJS		= $(SRCS:.c=.o)
@@ -21,7 +21,7 @@ OBJS_DIR = Src/
 OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
 
 CC			= gcc
-CC_FLAGS	= -Wall -Werror -Wextra
+CC_FLAGS 	= -lreadline
 
 $(OBJS_DIR)%.o : %.c $(PROJECT_H)
 	@mkdir -p $(OBJS_DIR)src

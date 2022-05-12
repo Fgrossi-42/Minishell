@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 11:31:19 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/05/12 15:48:32 by fgrossi          ###   ########.fr       */
+/*   Created: 2022/05/12 14:52:52 by fgrossi           #+#    #+#             */
+/*   Updated: 2022/05/12 14:57:44 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../Incl/minishell.h"
 
-# include <stdio.h>
-# include <string.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;	
 
-typedef struct s_utils {
-    const char	*prompt;
-	char		*string;
-	int a;
-	int b;
-	int result;
-}	t_utils;
+	i = 0;
+	if (!n)
+		return (0);
+	while (s1[i] == s2[i] && s1[i] != '\0')
+	{
+		if (i < (n - 1))
+			i++;
+		else
+			return (0);
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlen(const char *str);
+size_t	ft_strlen(const char *str)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
