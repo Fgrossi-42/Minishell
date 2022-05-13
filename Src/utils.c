@@ -6,7 +6,7 @@
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 14:52:52 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/05/12 14:57:44 by fgrossi          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:43:37 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,24 @@ size_t	ft_strlen(const char *str)
 		i++;
 	}
 	return (i);
+}
+
+int	ft_strnstr(const char *str, const char *to_find, size_t len)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		j = 0;
+		while (str[i + j] == to_find[j] && (i + j) < len)
+		{
+			if (to_find[j + 1] == '\0')
+				return (i + j + 1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }

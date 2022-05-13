@@ -6,7 +6,7 @@
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 11:31:19 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/05/12 15:48:32 by fgrossi          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:47:10 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ typedef struct s_utils {
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *str);
+int	ft_strnstr(const char *str, const char *to_find, size_t len);
 
 #endif
