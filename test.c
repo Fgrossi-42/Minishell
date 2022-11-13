@@ -1,16 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 19:10:14 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/10/26 16:42:52 by pcatapan         ###   ########.fr       */
+/*   Created: 2022/06/14 19:04:57 by pcatapan          #+#    #+#             */
+/*   Updated: 2022/09/30 17:41:49 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "inc/minishell.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+int main(char **envp){
+	int		pid;
+	int		pid2;
+	char	command[11];
+	char	value[2][100];
+	int		i;
+
+	pid = fork();
+	i = 1;
+	command = "/bin/echo";
+	value[0] = ft_strdup("Testo1");
+	value[1] = ft_strdup("Testo2");
+	value[2] = NULL;
+	if (pid == -1)
+		exit(0);
+	while (pid != 0 && i <= 2)
+	{
+		pid = fork();
+		//printf("%d --- i\n", i);
+		i++;
+	}
+	if (pid == 0)
+	{
+		if (execve(command, value, envp))
+			perror("ERRORE\n");
+			
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,8 +55,6 @@ int	main(int argc, char **argv, char **envp)
 	if (!main || !main->token)
 		return (0);
 	main->copy_env = ft_init_envp(envp);
-	main->export_env = malloc (sizeof(char **) * 1);
-	main->export_env[0] = NULL;
 	signal(SIGINT, ft_sig_handel);
 	signal(SIGQUIT, ft_sig_handel);
 	while (1)

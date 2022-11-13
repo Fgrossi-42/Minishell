@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgrossi <fgrossi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 11:31:19 by fgrossi           #+#    #+#             */
-/*   Updated: 2022/05/13 15:47:10 by fgrossi          ###   ########.fr       */
+/*   Created: 2022/01/12 09:31:46 by fgrossi           #+#    #+#             */
+/*   Updated: 2022/02/22 12:19:09 by fgrossi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include <stdio.h>
-# include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <string.h>
+# include <stdarg.h>
 
-typedef struct s_utils {
-    const char	*prompt;
-	char		*string;
-	int a;
-	int b;
-	int result;
-}	t_utils;
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlen(const char *str);
-int	ft_strnstr(const char *str, const char *to_find, size_t len);
+int				ft_printf(const char *str, ...);
+int				ft_putstr_v2(char *str);
+int				ft_putnbr(int n);
+int				ft_put_unsigned(unsigned int n);
+int				ft_putchar(int c);
 
 #endif

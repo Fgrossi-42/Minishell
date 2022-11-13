@@ -1,47 +1,56 @@
-BLU			= \033[0;34m
-GRN			= \033[0;32m
-RED			= \033[0;31m
-PUR			= \033[0;35m
-YLW			= \033[0;33m
-RST			= \033[0m
-END			= \e[0m
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/29 19:54:47 by pcatapan          #+#    #+#              #
+#    Updated: 2022/11/13 05:20:05 by pcatapan         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME		= minishell
+NAME = minishell
 
-FILES = main utils
+SRC =	./PRINTF/*.c \
+		./src/*.c \
+		./src/utils/*.c \
+		./src/syntax/*.c \
+		./src/parsing/*.c \
+		./src/execute/*.c \
+		./src/execute/execve/*.c \
+		./src/built_in/*.c \
+		./src/redirection/*.c 
 
-PROJECT_H	= Incl/minishell.h
-OBJS		= $(SRCS:.c=.o)
-OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
+OBJC = $(SRC:%.c=%.o)
 
-SRCS_DIR = Src/
-SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
+CC = gcc
 
-OBJS_DIR = Src/
-OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
+USER = fgrossi
 
-CC			= gcc
-CC_FLAGS 	= -lreadline
+#LDFLAGS = -L/opt/homebrew/opt/readline/lib
+#CPPFLAGS = -I/opt/homebrew/opt/readline/include
 
-$(OBJS_DIR)%.o : %.c $(PROJECT_H)
-	@mkdir -p $(OBJS_DIR)src
-	@$(CC) $(CC_FLAGS) -c $< -o $@
-	@printf	"\033[2K\r${GRN}[COMPILING]${RST} '$<' $(END)\n"
+FLAGS = -g #-fsanitize=address #-Wall -Werror -Wextra
 
-$(NAME): $(OBJECTS_PREFIXED)
-	@$(CC) -o $(NAME) $(OBJECTS_PREFIXED) $(CC_FLAGS)
-	@printf "\033[2K\r${PUR}[CREATED]\033[0m $(NAME)$(END)\n"
+#F_IRINA = -lreadline -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+FLAG_READLINE = -lreadline -lcurses -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include
+
 
 all: $(NAME)
 
+$(NAME) : $(SRC)
+	@$(CC) $(FLAGS) $(FLAG_READLINE) $(F_IRINA) $(LDFLAGS) $(CPPFLAGS) $(SRC) -o $(NAME)
+
 clean:
-	@rm -rf $(addprefix $(OBJS_DIR), $(SRCS_DIR))
-	@printf "\033[2K\r${YLW}[CLEAN]${RST} done$(END)\n"
+	@rm -f $(OBJS)
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "\033[2K\r${RED}[DESTROYED]${RST} $(NAME)$(END)\n"
-
+	@rm -f 42minishell_history
+	@rm -f fil*
+	@rm -f .heredoc
+	
 re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re
