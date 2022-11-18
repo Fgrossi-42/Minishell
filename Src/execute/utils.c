@@ -55,9 +55,6 @@ t_token	*ft_end_execute_(t_token *token, int fd_pipe[2], t_main *main)
 	ft_free_matrix(main->export_env);
 	main->copy_env = ft_get_next_line(main->fd_matrix, FILE_MATRIX);
 	main->export_env = ft_get_next_line(main->fd_export, FILE_EXPORT);
-	// int i = 0;
-	// while (main->export_env[i])
-	// 	printf("%s\n", main->export_env[i++]);
 	return (token);
 }
 
@@ -76,7 +73,8 @@ void	ft_store_matrix(t_main *main)
 	i = 0;
 	while (main->export_env[i])
 	{
-		write(main->fd_export, main->export_env[i], ft_strlen(main->export_env[i]));
+		write(main->fd_export, main->export_env[i],
+			ft_strlen(main->export_env[i]));
 		write(main->fd_export, "\n", 1);
 		i++;
 	}

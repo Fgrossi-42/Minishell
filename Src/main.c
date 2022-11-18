@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	main->copy_env = ft_init_envp(envp);
 	main->export_env = malloc (sizeof(char **) * 1);
 	main->export_env[0] = NULL;
-	main->export_env[1] = NULL;
 	signal(SIGINT, ft_sig_handel);
 	signal(SIGQUIT, ft_sig_handel);
 	while (1)
