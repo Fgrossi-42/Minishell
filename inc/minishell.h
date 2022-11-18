@@ -163,7 +163,7 @@ void		ft_check_echo(t_token *token);
 void		ft_export(t_token *token, t_main *main);
 void		ft_cd(t_token *token, t_main *main);
 void		ft_pwd(void);
-void		ft_env(t_token *token);
+void		ft_env(t_main *main);
 void		ft_unset(t_token *token, t_main *main);
 void		ft_exit(t_token *token);
 t_token		*ft_execute_builtin(t_token *s_token, t_main *main);

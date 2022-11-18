@@ -14,7 +14,6 @@
 
 char	**ft_get_next_line(int fd, char *file)
 {
-	int		rd;
 	int		i;
 	char	c;
 	char	**rtr;
@@ -23,18 +22,13 @@ char	**ft_get_next_line(int fd, char *file)
 	i = 0;
 	buffer = malloc (9999);
 	fd = open(file, O_CREAT | O_RDONLY, 0644);
-	while ((rd = read(fd, &c, 1) > 0 ))
+	while (read(fd, &c, 1) > 0)
 	{
 		buffer[i] = c;
 		i++;
 		if (c == '\0')
 			break ;
 	}
-	// if ((!buffer[i - 1] && !rd ) || rd == -1)
-	// {
-	// 	free(buffer);
-	// 	return (NULL);
-	// }
 	buffer[i] = '\0';
 	rtr = ft_split_original(buffer, '\n');
 	return (rtr);

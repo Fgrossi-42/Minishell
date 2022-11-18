@@ -17,7 +17,7 @@ void	ft_search_builtin(t_token *token, t_main *main)
 	if (ft_strcmp(token->value[0], "echo"))
 		ft_check_echo(token);
 	else if (ft_strcmp(token->value[0], "env"))
-		ft_env(token);
+		ft_env(main);
 	else if (ft_strcmp(token->value[0], "unset"))
 		ft_unset(token, main);
 	else if (ft_strcmp(token->value[0], "pwd"))

@@ -20,7 +20,6 @@ void	cd_path(t_main *main)
 	i = 0;
 	while (main->copy_env[i])
 	{
-		tmp = getcwd(NULL, 0);
 		if (ft_strncmp(main->copy_env[i], "PWD=", 4) == 0)
 		{
 			tmp = getcwd(NULL, 0);
@@ -56,15 +55,15 @@ void	ft_pwd(void)
 	ft_printf("%s\n", pwd);
 }
 
-void	ft_env(t_token *token)
+void	ft_env(t_main *main)
 {
 	int	i;
 
 	i = 0;
 	printf("nostro\n");
-	while (token->main->copy_env[i])
+	while (main->copy_env[i])
 	{
-		ft_printf("%s\n", token->main->copy_env[i]);
+		ft_printf("%s\n", main->copy_env[i]);
 		i++;
 	}
 }

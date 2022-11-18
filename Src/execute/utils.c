@@ -53,8 +53,10 @@ t_token	*ft_end_execute_(t_token *token, int fd_pipe[2], t_main *main)
 		dup2(token->dup, STDIN_FILENO);
 	ft_free_matrix(main->copy_env);
 	ft_free_matrix(main->export_env);
-	main->copy_env = ft_get_next_line(main->fd_matrix, FILE_MATRIX);
-	main->export_env = ft_get_next_line(main->fd_export, FILE_EXPORT);
+	main->copy_env = ft_get_next_line(main->fd_matrix,
+			ft_strjoin(main->files_pwd, "irina"));
+	main->export_env = ft_get_next_line(main->fd_export,
+			ft_strjoin(main->files_pwd, "export"));
 	return (token);
 }
 

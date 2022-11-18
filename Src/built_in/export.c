@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	ft_export_naked(t_token *token, t_main *main)
+void	ft_export_naked(t_main *main)
 {
 	int	i;
 
@@ -58,7 +58,6 @@ char	**ft_matrixdup_add(char **matrix, char *str)
 void	ft_add_to_exp(char *var_add, t_main *main)
 {
 	int		j;
-	char	**matrix;
 
 	if (ft_find_in_exp(main->export_env, var_add) != 0)
 	{
@@ -75,7 +74,6 @@ void	ft_add_to_exp(char *var_add, t_main *main)
 void	ft_add_to_env(char *var_add, t_main *main)
 {
 	int		j;
-	char	**matrix;
 
 	if (ft_find_in_env(main->copy_env, var_add) != 0)
 	{
@@ -97,7 +95,7 @@ void	ft_export(t_token *token, t_main *main)
 	j = 0;
 	i = 1;
 	if (token->value[1] == NULL)
-		return (ft_export_naked(token, main));
+		return (ft_export_naked(main));
 	while (token->value[i])
 	{
 		if (ft_strchr(token->value[i], '=') == 0
@@ -112,7 +110,6 @@ void	ft_export(t_token *token, t_main *main)
 			continue ;
 		}
 		ft_add_to_env(token->value[i], main);
-		printf("declare -x %s\n", token->value[i]);
 		i++;
 	}
 }
