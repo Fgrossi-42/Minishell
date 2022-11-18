@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-char	**ft_get_next_line(t_main *main)
+char	**ft_get_next_line(int fd, char *file)
 {
 	int		rd;
 	int		i;
@@ -22,8 +22,8 @@ char	**ft_get_next_line(t_main *main)
 
 	i = 0;
 	buffer = malloc (9999);
-	main->fd_matrix = open(FILE_MATRIX, O_CREAT | O_RDONLY, 0644);
-	while ((rd = read(main->fd_matrix, &c, 1) > 0 ))
+	fd = open(file, O_CREAT | O_RDONLY, 0644);
+	while ((rd = read(fd, &c, 1) > 0 ))
 	{
 		buffer[i] = c;
 		i++;

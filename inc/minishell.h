@@ -21,6 +21,7 @@
 # define HOME_SHELL " ~ "
 # define FILE_HISTORY "/.42minishell_history"
 # define FILE_MATRIX "irina"
+# define FILE_EXPORT "export"
 # define RED "\x1b[31m"
 # define COLOR_RES  "\x1b[0m"
 # define ERROR_DOUBLE_QUOTE "Mistake : unclosed double quotes"
@@ -63,6 +64,7 @@ typedef struct s_main
 	int			open_brackets;
 	int			close_brackets;
 	int			fd_matrix;
+	int			fd_export;
 	int			dub_quotes;
 	int			sin_quotes;
 	int			count;
@@ -102,7 +104,7 @@ size_t		ft_strlen(char *s);
 size_t		ft_matrixlen(char **s);
 int			ft_find_in_env(char **matrix, char *str);
 int			ft_find_in_exp(char **matrix, char *str);
-char		**ft_get_next_line(t_main *main);
+char		**ft_get_next_line(int fd, char *file);
 char		*ft_clear_brackets(char *str);
 char		*ft_strcpy(char *dst, char *src);
 char		*ft_strclear(char *str, char del);
@@ -133,7 +135,7 @@ char		*ft_delete_brackets(char *line);
 // DIR Execute
 void		ft_execute_command(char *line, t_main *main);
 void		ft_execute_dollar(t_token *token);
-void		ft_store_matrix(t_token *token, t_main *main);
+void		ft_store_matrix(t_main *main);
 t_token		*ft_execute_enviroment(t_token *token, char *var_add);
 t_token		*ft_execute_exeve(t_token *token, t_main *main);
 int			ft_check_envi(char *line);

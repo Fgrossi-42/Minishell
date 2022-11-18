@@ -38,6 +38,7 @@ t_token	*ft_execute_builtin(t_token *token, t_main *main)
 	if (pipe(fd_pipe) == -1)
 		perror(RED"ERRORE2"COLOR_RES);
 	main->fd_matrix = open(FILE_MATRIX, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	main->fd_export = open(FILE_EXPORT, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	pidchild = fork();
 	if (pidchild != 0)
 	{
@@ -55,7 +56,7 @@ t_token	*ft_execute_builtin(t_token *token, t_main *main)
 			close(fd_pipe[1]);
 		}
 		ft_search_builtin(token, main);
-		ft_store_matrix(token, main);
+		ft_store_matrix(main);
 		exit(0);
 	}
 	token = ft_end_execute_(token, fd_pipe, main);

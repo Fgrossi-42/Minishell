@@ -45,19 +45,19 @@ void	ft_add_to_env(t_token *token, char *var_add, t_main *main)
 	main->copy_env[j] = ft_strdup(var_add);
 }
 
-void	ft_add_to_exp(t_token *token, char *var_add, t_main *main)
+void	ft_add_to_exp(char *var_add, t_main *main)
 {
 	int	j;
 
-	if (ft_find_in_exp(main->export_env, var_add) != 0)
-				j = ft_find_in_exp(main->export_env, var_add);
-	else
-	{
-		j = ft_matrixlen(main->export_env);
-		main->export_env[j + 1] = NULL;
-	}
-	free(main->export_env[j]);
+
+	// if (ft_find_in_exp(main->export_env, var_add) != 0)
+	// 			j = ft_find_in_exp(main->export_env, var_add);
+	// else
+	// {
+	j = ft_matrixlen(main->export_env);
+	// }
 	main->export_env[j] = ft_strdup(var_add);
+	main->export_env[++j] = NULL;
 }
 
 void	ft_export(t_token *token, t_main *main)
@@ -78,11 +78,14 @@ void	ft_export(t_token *token, t_main *main)
 				printf(RED"minishell: export: '%s': not a valid identifier\n"
 					COLOR_RES, token->value[i]);
 			else
-				ft_add_to_exp(token, token->value[i], main);
+				ft_add_to_exp(token->value[i], main);
 			i++;
 			continue ;
 		}
 		ft_add_to_env(token, token->value[i], main);
 		i++;
 	}
+	// i = 0;
+	// while (main->export_env[i])
+	// 	printf("%s\n", main->export_env[i++]);
 }

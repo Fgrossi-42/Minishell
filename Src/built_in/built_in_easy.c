@@ -85,6 +85,7 @@ void	ft_unset(t_token *token, t_main *main)
 					main->copy_env[j] = main->copy_env[j + 1];
 					j++;
 				}
+				main->copy_env[j] = NULL;
 			}
 			j++;
 		}
