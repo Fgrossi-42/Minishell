@@ -78,6 +78,26 @@ t_token	*ft_execute_exeve(t_token *token, t_main *main)
 	return (token);
 }
 
+void	ft_check_dir(t_main *main)
+{
+	int		i;
+	char	*pwd;
+
+	i = 0;
+	pwd = getcwd(NULL, 0);
+	while (main->copy_env[i])
+	{
+		if (ft_strncmp(main->copy_env[i], "PWD=", 4) == 0
+			&& pwd != ft_substr(main->copy_env[i],
+				4, ft_strlen(main->copy_env[i])))
+		{
+			pwd = ft_substr(main->copy_env[i], 4, ft_strlen(main->copy_env[i]));
+			chdir(pwd);
+		}
+		i++;
+	}
+}
+
 void	ft_execute_command(char *line, t_main *main)
 {
 	pid_t	pidchild;
@@ -102,6 +122,7 @@ void	ft_execute_command(char *line, t_main *main)
 		// 	main->token = ft_redirections(main->token, main);
 		else // Qui entra se il comando bultin é errato o se non é da gestirte
 			main->token = ft_execute_exeve(main->token, main);
+		ft_check_dir(main);
 		main->count++;
 	}
 }

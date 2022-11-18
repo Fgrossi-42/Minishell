@@ -25,6 +25,9 @@ int	main(int argc, char **argv, char **envp)
 	main->copy_env = ft_init_envp(envp);
 	main->export_env = malloc (sizeof(char **) * 1);
 	main->export_env[0] = NULL;
+	// main->files_pwd = getcwd(NULL, 0);
+	// main->files_pwd = ft_strjoin(main->files_pwd, "/");
+	// printf("main->files_pwd: %s\n", main->files_pwd);
 	signal(SIGINT, ft_sig_handel);
 	signal(SIGQUIT, ft_sig_handel);
 	while (1)

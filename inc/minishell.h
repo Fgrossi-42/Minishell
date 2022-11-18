@@ -20,8 +20,8 @@
 # define DIVISOR_SHELL " ▸ "
 # define HOME_SHELL " ~ "
 # define FILE_HISTORY "/.42minishell_history"
-# define FILE_MATRIX "irina"
-# define FILE_EXPORT "export"
+# define FILE_MATRIX "/Users/fgrossi/goinfre/Minishell/irina"
+# define FILE_EXPORT "/Users/fgrossi/goinfre/Minishell/export"
 # define RED "\x1b[31m"
 # define COLOR_RES  "\x1b[0m"
 # define ERROR_DOUBLE_QUOTE "Mistake : unclosed double quotes"
@@ -60,6 +60,7 @@ typedef struct s_main
 {
 	char		**copy_env;
 	char		**export_env;
+	char		*files_pwd;
 	char		*copy_line;
 	int			open_brackets;
 	int			close_brackets;
