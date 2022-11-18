@@ -37,13 +37,10 @@ t_token	*ft_execute_builtin(t_token *token, t_main *main)
 
 	if (pipe(fd_pipe) == -1)
 		perror(RED"ERRORE2"COLOR_RES);
-	// printf("main->files_pwd: %s\n", main->files_pwd);
-	// main->fd_matrix = open(ft_strjoin(main->files_pwd, "irina"),
-	// 		O_CREAT | O_RDWR | O_TRUNC, 0644);
-	// main->fd_export = open(ft_strjoin(main->files_pwd, "export"),
-	// 		O_CREAT | O_RDWR | O_TRUNC, 0644);
-	main->fd_matrix = open(FILE_MATRIX, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	main->fd_export = open(FILE_EXPORT, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	main->fd_matrix = open(ft_strjoin(main->files_pwd, "irina"),
+			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	main->fd_export = open(ft_strjoin(main->files_pwd, "export"),
+			O_CREAT | O_RDWR | O_TRUNC, 0644);
 	pidchild = fork();
 	if (pidchild != 0)
 	{
