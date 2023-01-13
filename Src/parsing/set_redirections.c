@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 18:54:54 by aanghel           #+#    #+#             */
-/*   Updated: 2022/11/12 23:29:02 by pcatapan         ###   ########.fr       */
+/*   Created: 2022/10/15 18:54:54 by pcatapan          #+#    #+#             */
+/*   Updated: 2022/12/05 16:59:41 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,24 @@ int	ft_search_redir(t_token *token, char *redir)
 	{
 		if (ft_strcmp(token->value[i], redir))
 		{
-			token->name_file = ft_strdup(token->value[i + 1]);
+			if (!token->name_file)
+				token->name_file = ft_strdup(token->value[i + 1]);
 			return (1);
 		}
+		i++;
+	}
+	return (0);
+}
+
+int	ft_set_bool_redir(t_token *token, char *redir)
+{
+	int	i;
+
+	i = 0;
+	while (token->value[i])
+	{
+		if (ft_strcmp(token->value[i], redir))
+			return (1);
 		i++;
 	}
 	return (0);
@@ -40,7 +55,7 @@ void	ft_set_redirections(t_token *token)
 			token->append = true;
 		if (ft_search_redir(token, "<") == 1)
 			token->input = true;
-		if (ft_search_redir(token, "<<") == 1)
+		if (ft_set_bool_redir(token, "<<") == 1)
 			token->heredoc = true;
 		if (!token->next)
 			break ;

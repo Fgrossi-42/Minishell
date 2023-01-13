@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aanghel <aanghel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 01:00:34 by aanghel           #+#    #+#             */
-/*   Updated: 2022/10/31 01:07:39 by aanghel          ###   ########.fr       */
+/*   Created: 2022/12/05 17:01:45 by pcatapan          #+#    #+#             */
+/*   Updated: 2022/12/05 17:01:48 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strcpy(char *dst, char *src)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

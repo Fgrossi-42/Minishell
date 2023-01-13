@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 11:15:28 by aanghel           #+#    #+#             */
-/*   Updated: 2022/11/13 05:00:17 by pcatapan         ###   ########.fr       */
+/*   Created: 2022/12/05 17:00:00 by pcatapan          #+#    #+#             */
+/*   Updated: 2022/12/05 17:00:05 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_output_redirect(t_token *token, t_main *main)
 {
 	int	fd;
 
+	fd = 0;
 	token->dup = dup(STDOUT_FILENO);
 	if (token->output == 1)
 	{
@@ -31,24 +32,27 @@ void	ft_output_redirect(t_token *token, t_main *main)
 	{
 		perror(RED ERROR_FILE COLOR_RES);
 		write(fd, "1", 1);
-		exit(0);
+		g_exit = 1;
+		ft_free_token(token);
+		exit(1);
 	}
 	token->stdoutput = fd;
-	ft_change_name_file(main, token, '<');
+	if (ft_set_bool_redir(token, "<"))
+		ft_change_name_file(main, token, '<');
 }
 
-void	ft_input_redirect(t_token *token, t_main *main)
+void	ft_input_redirect(t_token *token)
 {
 	int	fd;
 
 	token->dup = dup(STDIN_FILENO);
-	printf("%s\n", token->name_file);
 	fd = open (token->name_file, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	if (fd == -1)
 	{
 		perror(RED ERROR_FILE COLOR_RES);
 		write(fd, "1", 1);
+		g_exit = 1;
 		exit(1);
 	}
 	token->stdinput = fd;
@@ -76,47 +80,31 @@ void	ft_delete_redirection(t_token *token)
 	}
 }
 
-void	ft_single_redir(t_token *token, t_main *main)
+void	ft_stdout(t_token *token, t_main *main)
 {
-	ft_print_lst(token);
-	if (token->heredoc == 1)
-		ft_heredoc(token, main);
-	if (token->output == 1 || token->append == 1)
-		ft_output_redirect(token, main);
-	if (token->input == 1)
-		ft_input_redirect(token, main);
-	ft_delete_redirection(token);
-	if (token->command == NULL)
-	{
-		if (token->stdoutput != STDOUT_FILENO)
-			dup2(token->dup, STDOUT_FILENO);
-		else if (token->stdinput != STDIN_FILENO)
-			dup2(token->dup, STDIN_FILENO);
-	}
-	ft_qualcosa(token, main);
+	if (ft_count_redirection(token) > 1)
+		ft_execute_multi_redir(token);
+	else
+		ft_single_redir(token, main);
+	if (token->stdoutput != STDOUT_FILENO)
+		dup2(token->dup, STDOUT_FILENO);
+	else if (token->stdinput != STDIN_FILENO)
+		dup2(token->dup, STDIN_FILENO);
 }
 
 t_token	*ft_redirections(t_token *token, t_main *main)
 {
 	pid_t	pidchild;
-	char	*line;
 
 	pidchild = fork();
 	if (pidchild != 0)
-		waitpid(pidchild, &token->res, 0);
-	else
 	{
-		if (ft_count_redirection(token) != 1)
-			ft_execute_multi_redir(token, main);
-		else
-		{
-			ft_single_redir(token, main);
-			if (token->stdoutput != STDOUT_FILENO)
-				dup2(token->dup, STDOUT_FILENO);
-			else if (token->stdinput != STDIN_FILENO)
-				dup2(token->dup, STDIN_FILENO);
-		}
+		waitpid(pidchild, &token->res, 0);
+		if (WIFEXITED(token->res))
+			g_exit = WEXITSTATUS(token->res);
 	}
+	else
+		ft_stdout(token, main);
 	if (token->next)
 	{
 		token = token->next;

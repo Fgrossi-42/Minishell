@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aanghel <aanghel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:32:54 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/10/31 00:40:49 by aanghel          ###   ########.fr       */
+/*   Updated: 2022/12/04 18:03:15 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,15 @@ int	ft_check_builtin(t_token *token)
 	return (0);
 }
 
-char	*ft_clear_value(char *str)
+char	*ft_check_echo_n(char *str)
 {
-	int		start;
-	int		end;
-	int		i;
+	size_t		i;
 
-	start = 0;
-	end = 0;
-	i = 0;
-	if (str[0] == 34 || str[0] == 39)
-		start = 1;
-	while (str[i + start])
+	i = 1;
+	while (str[i] == 'n')
 		i++;
-	if (str[i] == 34 || str[i] == 39)
-		end = i - 1;
+	if (i < ft_strlen(str))
+		return (str);
 	else
-		end = ft_strlen(str);
-	return (ft_substr(str, start, end));
-}
-
-char	*ft_clear_brackets(char *str)
-{
-	int		start;
-	int		end;
-	int		i;
-
-	start = 0;
-	end = 0;
-	i = 0;
-	if (str[0] == 123)
-		start = 1;
-	while (str[i] != 123)
-		i++;
-	start = i + 1;
-	while (str[i] != 125)
-		i++;
-	end  = i - 2;
-	return (ft_substr(str, start, end));
+		return ("-n");
 }

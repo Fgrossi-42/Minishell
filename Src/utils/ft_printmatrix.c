@@ -1,38 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_printmatrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 17:01:51 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/12/05 17:01:52 by pcatapan         ###   ########.fr       */
+/*   Created: 2022/11/28 17:44:43 by pcatapan          #+#    #+#             */
+/*   Updated: 2022/11/28 17:46:21 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/**
- * Duplicates a string.
- *
- * @param str The string to duplicate.
- *
- * @returns A pointer to the duplicated string.
- */
-char	*ft_strdup(const char *s1)
+void	ft_print_matrix(char **matrix)
 {
-	int		i;
-	char	*str;
+	int	i;
 
-	i = 0;
-	str = malloc(sizeof(*str) * (ft_strlen((char *)s1) + 1));
-	if (!str)
-		return (NULL);
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+	i = -1;
+	while (matrix[++i])
+		printf("%s\n", matrix[i]);
 }

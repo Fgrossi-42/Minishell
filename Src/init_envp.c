@@ -6,7 +6,7 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 01:33:11 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/11/13 05:15:20 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:59:29 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**ft_init_envp(char **envp)
 	int		i;
 	char	**copy_envp;
 
-	i = 0;
+	i = 0 ;
 	while (envp[i])
 		i++;
 	copy_envp = malloc(sizeof(char *) * (i + 3));
@@ -72,7 +72,7 @@ char	**ft_init_envp(char **envp)
 			if (copy_envp[i])
 				continue ;
 			ft_free_matrix(copy_envp);
-			exit(write(1, "Error setting up env\n", 21));
+			exit(127);
 		}				
 	}
 	ft_add_shell_env(copy_envp, envp, i);

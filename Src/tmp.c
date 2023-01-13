@@ -6,7 +6,7 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 17:46:39 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/11/12 19:49:49 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/04 23:34:51 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_print_lst(t_token *token)
 	int		i;
 	t_token	*a;
 
-	// a = ft_return_head(token);
 	a = token;
 	while (a)
 	{
@@ -25,6 +24,7 @@ void	ft_print_lst(t_token *token)
 		i = -1;
 		while (a->value[++i] != NULL)
 			printf("%s --- Value %d\n", a->value[i], i);
+		printf("%s -- Token Name File\n", a->name_file);
 		printf("%d -- Priority\n", a->priority);
 		printf("%d -- Bool Res\n", a->res);
 		printf("%d -- Bool And\n", a->and);

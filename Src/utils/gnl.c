@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 18:28:58 by aanghel           #+#    #+#             */
-/*   Updated: 2022/10/16 21:45:15 by pcatapan         ###   ########.fr       */
+/*   Created: 2022/12/05 17:00:49 by pcatapan          #+#    #+#             */
+/*   Updated: 2022/12/05 17:00:53 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ char	**ft_get_next_line(int fd, char *file)
 		if (c == '\0')
 			break ;
 	}
+	close(fd);
 	buffer[i] = '\0';
 	rtr = ft_split_original(buffer, '\n');
+	free(buffer);
+	free(file);
 	return (rtr);
 }

@@ -6,7 +6,7 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:57:38 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/11/13 00:00:51 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/05 00:21:56 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,19 @@ char	*ft_clear_prompt(char *prompt)
 	return (rtr);
 }
 
-char	*ft_get_line_input(char **envp)
+char	*ft_get_line_input(void)
 {
 	char	*prompt;
 	char	*tmp;
 	char	*home;
 	char	*pwd;
 
-	home = ft_searchstrchr("HOME=", envp);
-	pwd = ft_searchstrchr("PWD=", envp);
+	home = getenv("HOME");
+	pwd = getcwd(NULL, 0);
 	if (ft_strcmp(home, pwd))
 		prompt = ft_strjoin(pwd, HOME_SHELL);
 	else
 		prompt = ft_strjoin(pwd, DIVISOR_SHELL);
-	free(home);
 	free(pwd);
 	tmp = ft_clear_prompt(prompt);
 	prompt = ft_strjoin(NAME_SHELL, tmp);
@@ -88,25 +87,30 @@ char	*ft_get_line_input(char **envp)
 	return (prompt);
 }
 
-int	ft_prompt(char **envp, t_main *main)
+int	ft_prompt(t_main *main)
 {
-	char			*line;
+	char	*line;
 
-	line = ft_get_line_input(main->copy_env);
+	line = ft_get_line_input();
 	if (!line)
 	{
 		printf(RED "\texit\n" COLOR_RES);
-		exit(0);
+		free(main->files_pwd);
+		free(main->token);
+		exit(127);
 	}
 	else if (line[0] != '\0')
 	{
-		ft_add_history(line, envp);
+		ft_add_history(line);
 		ft_check_syntax(line, main);
 		if (!main->error)
 		{
 			ft_parsing(line, main);
-			ft_execute_command(line, main);
+			ft_execute_command(main);
+			ft_free_token(main->token);
+			free(main->copy_line);
 		}
 	}
+	free(line);
 	return (0);
 }

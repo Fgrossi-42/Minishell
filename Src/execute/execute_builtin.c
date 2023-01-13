@@ -6,7 +6,7 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:42:40 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/11/13 03:04:11 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/04 19:06:29 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	ft_search_builtin(t_token *token, t_main *main)
 {
-	if (ft_strcmp(token->value[0], "echo"))
+	if (ft_strcmp(token->value[0], "echo") || \
+			ft_strcmp(token->value[0], "/bin/echo"))
 		ft_check_echo(token);
 	else if (ft_strcmp(token->value[0], "env"))
-		ft_env(main);
+		ft_check_env(token, main);
 	else if (ft_strcmp(token->value[0], "unset"))
-		ft_unset(token, main);
-	else if (ft_strcmp(token->value[0], "pwd"))
-		ft_pwd();
+		ft_check_unset(token, main);
+	else if (ft_strcmp(token->value[0], "pwd") || \
+			ft_strcmp(token->value[0], "/bin/pwd"))
+		ft_check_pwd(token);
 	else if (ft_strcmp(token->value[0], "cd"))
-		ft_cd(token, main);
+		ft_check_cd(token, main);
 	else if (ft_strcmp(token->value[0], "export"))
-		ft_export(token, main);
-	else if (ft_strcmp(token->value[0], "exit"))
-		ft_exit(token);
+		ft_check_export(token, main);
 }
 
 t_token	*ft_execute_builtin(t_token *token, t_main *main)
@@ -37,18 +37,12 @@ t_token	*ft_execute_builtin(t_token *token, t_main *main)
 
 	if (pipe(fd_pipe) == -1)
 		perror(RED"ERRORE2"COLOR_RES);
-	main->fd_matrix = open(ft_strjoin(main->files_pwd, "irina"),
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
-	main->fd_export = open(ft_strjoin(main->files_pwd, "export"),
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	ft_start_execute_(main);
+	if (ft_strcmp(token->value[0], "exit"))
+		ft_check_exit(token);
 	pidchild = fork();
 	if (pidchild != 0)
-	{
-		close(fd_pipe[1]);
-		waitpid(pidchild, &token->res, 0);
-		if (token->res == 768)
-			exit(0);
-	}
+		ft_parent_execute_(token, pidchild, fd_pipe);
 	else
 	{
 		close(fd_pipe[0]);

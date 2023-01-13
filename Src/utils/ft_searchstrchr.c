@@ -6,7 +6,7 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 01:37:46 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/07/14 20:55:16 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/02 20:41:39 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@
  */
 char	*ft_searchstrchr(char const *str, char **array)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
+	char	*rtr;
 
 	i = -1;
 	len = ft_strlen((char *)str);
 	while (array[++i])
 	{
 		if (ft_strncmp(str, array[i], len) == 0)
-			return (ft_substr(array[i], len, ft_strlen(array[i])));
+		{
+			rtr = ft_substr(array[i], len, ft_strlen(array[i]));
+			return (rtr);
+		}
 	}
 	return (NULL);
 }

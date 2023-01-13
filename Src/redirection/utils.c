@@ -6,51 +6,29 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 03:26:32 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/11/13 03:41:11 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/04 23:25:42 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*ft_find_name_file(char *str)
+void	ft_single_redir(t_token *token, t_main *main)
 {
-	int		start;
-	int		end;
-	int		delete;
-	char	*rtr;
-
-	start = 0;
-	end = 0;
-	while (str[start] == 32)
-		start++;
-	while (str[start + end] != 32)
-		end++;
-	rtr = ft_substr(str, start, end);
-	delete = start + end;
-	while (delete != -1)
-		str[delete--] = 127;
-	return (rtr);
-}
-
-char	*ft_create_line(t_token *token)
-{
-	char	*tmp;
-	char	*val;
-	int		i;
-
-	tmp = (char *)malloc(sizeof(char) * 1);
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	tmp = "\0";
-	while (token->value[i])
+	if (token->heredoc == 1)
+		ft_heredoc(token, main);
+	if (token->output == 1 || token->append == 1)
+		ft_output_redirect(token, main);
+	if (token->input == 1)
+		ft_input_redirect(token);
+	ft_delete_redirection(token);
+	if (token->command == NULL)
 	{
-		val = ft_strjoin(token->value[i], " ");
-		tmp = ft_strjoin(tmp, val);
-		free(val);
-		i++;
+		if (token->stdoutput != STDOUT_FILENO)
+			dup2(token->dup, STDOUT_FILENO);
+		else if (token->stdinput != STDIN_FILENO)
+			dup2(token->dup, STDIN_FILENO);
 	}
-	return (tmp);
+	ft_execute_redi(token, main);
 }
 
 char	*ft_set_to_del(char *line)
@@ -77,7 +55,7 @@ char	**ft_clear_matrix(char **matrix)
 	{
 		tmp = ft_strdup(matrix[i]);
 		free(matrix[i]);
-		matrix[i++] = ft_strclear(tmp, 127);
+		matrix[i++] = ft_strtrim2(tmp, 127);
 		free(tmp);
 	}
 	return (matrix);

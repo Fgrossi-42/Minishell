@@ -6,7 +6,7 @@
 /*   By: pcatapan <pcatapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 20:59:22 by pcatapan          #+#    #+#             */
-/*   Updated: 2022/10/16 17:32:18 by pcatapan         ###   ########.fr       */
+/*   Updated: 2022/12/04 18:24:49 by pcatapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_check_operetor_logic(char *line, t_main *main)
 			if (line[i + 1] == '&' && line[i + 2] != '&')
 				i++;
 			else if ((line[i + 1] == '|' || line[i + 1] != '|') \
-					&& line[i + 2] != '|')
+					&& line[i + 2] != '|' && line[i] != '&')
 				i++;
 			else
 			{
@@ -100,21 +100,19 @@ void	ft_check_operetor_logic(char *line, t_main *main)
 void	ft_check_syntax(char *line, t_main *main)
 {
 	main->error = false;
-	main->sub_shell = false;
 	main->dub_quotes = 0;
 	main->sin_quotes = 0;
 	main->redirections = false;
 	main->expand = false;
 	ft_easy_synatx(line, main);
+	if (ft_strchr(line, '$') && !main->error)
+		main->error = ft_expand_check(line);
 	if (!main->error)
 		ft_check_redirection(line, main);
 	if (!main->error)
 		ft_check_operetor_logic(line, main);
 	if (main->op_logic && !main->error)
 		ft_check_brackets(line, main);
-	// if (main->dub_quotes != 0 || ft_strchr(line, '$'))
-	// {
-	// 	line = ft_expand_dollar(line, main);
-	// 	main->sub_shell = true;
-	// }
+	if (main->error == TRUE)
+		g_exit = 258;
 }
